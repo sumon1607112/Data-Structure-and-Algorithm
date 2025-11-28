@@ -1,0 +1,67 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<int>simpleSeive(int limit){
+vector<char>isPrime(limit+1,true);
+
+for(int i=3;i*1LL*i<=limit;i+=2){
+    if(isPrime[i]){
+        for(int j=i*1LL*i;j<=limit;j+=i<<1){
+            isPrime[j]=false;
+        }
+    }
+}
+
+vector<int>primes={2};
+
+for(int i=3;i<=limit;i+=2){
+        if(isPrime[i])
+    primes.push_back(i);
+}
+return primes;
+}
+
+void segmentedSeive(long long L, long long R){
+    int limit=sqrt(R);
+    vector<int> primes=simpleSeive(limit);
+
+int range=R-L+1;
+vector<char>isPrime(range+1,true);
+
+for(auto p:primes){
+    long long start=max(p*p*1LL, ((L+p-1)/p)*p*1LL);
+
+   for(int k=start;k<=R;k+=p){
+    isPrime[k-L]=false;
+   }
+}
+
+if (L == 1) isPrime[0] = false;
+
+bool first=true;
+for(int i=L;i<=R;i++)
+{
+    if(isPrime[i-L]){
+       if(!first)printf("\n");
+       printf("%d",i);
+    first=false;
+    }
+}
+
+}
+
+int main()
+{
+    int t;
+    scanf("%d",&t);
+while(t--){
+    int L,R;
+  scanf("%d %d",&L,&R);
+  segmentedSeive(L,R);
+  if(t!=0)
+    printf("\n");
+}
+
+    return 0;
+}
