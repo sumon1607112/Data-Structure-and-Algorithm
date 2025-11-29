@@ -1,0 +1,34 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    string s="flksdkfjwoierjewoisdpofkewporwepooooooooooporkweporjnoiewnrfaiosdldkfsdllllldsfjdifdsjoif";
+
+    unordered_map<char,int>freq;
+
+    for(auto it:s){
+        freq[it]++;
+    }
+
+    int maxFreq=0;
+    for(auto it:freq) maxFreq=max(maxFreq,it.second);
+
+        vector<string>bucket(maxFreq+1);
+
+    for(auto it:freq){
+            cout<<"character:"<<it.first<<" "<<it.second<<endl;
+        bucket[it.second]+=it.first;
+    }
+
+    string ans;
+    for(int i=maxFreq;i>=0;i--){
+        for(char c:bucket[i]){
+           ans.append(i, c);
+        }
+    }
+
+    cout<<ans<<endl;
+    return 0;
+}
